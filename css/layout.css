@@ -8,5 +8,9 @@
 	left:0;
 	right:0;
 	margin:auto;
-	text-align:0;
+	text-align:center;
+}
+
+.url{
+	width:50%;
 }
