@@ -1,5 +1,7 @@
 "use strict";
 $(function(){
+	jQuery.ajaxSettings.traditional = true;
+	
 	var wordString = 'A computer is a general purpose device that can be programmed to carry out a set of arithmetic or logical operations automatically. Since a sequence of operations can be readily changed, the computer can solve more than one kind of problem.';
 	var words = wordString.split(' ');
 	
