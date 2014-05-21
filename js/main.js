@@ -69,6 +69,9 @@ $(function(){
 	$('button.stop').on('click', function(e){
 		stop();
 	});
+	$('button.reset').on('click', function(e){
+		wordIndex = 0;
+	});
 	
 	$('button.url').on('click', function(e){
 		var title = $('input.url').val();
