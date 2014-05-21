@@ -1,3 +1,4 @@
+"use strict";
 $(function(){
 	var wordString = 'A computer is a general purpose device that can be programmed to carry out a set of arithmetic or logical operations automatically. Since a sequence of operations can be readily changed, the computer can solve more than one kind of problem.';
 	var words = wordString.split(' ');
@@ -13,7 +14,7 @@ $(function(){
 		setWord(words[wordIndex++]);
 	};
 	
-	var wordtick;
+	var wordTick = null;
 	function start(){
 		wordTick = setInterval(nextWord, wordSpeed);
 	}
@@ -42,26 +43,39 @@ $(function(){
 	
 	setWPMTitle(wordSpeed);
 	
+	var speedVariance = 50;
 	$(document.body).on('keyup', function(e){
-		var mod = 0;
 		switch (e.which) {
 			case 38: //up
-				mod = -50;
+				changeSpeed(wordSpeed - speedVariance);
 			break;
 			
 			case 40: //down
-				mod = 50;
+				changeSpeed(wordSpeed + speedVariance);
 			break;
 		}
-		
-		if (mod){
-			stop();
-			wordSpeed += mod;
-			if (wordSpeed < mod) wordSpeed = mod;
-			start();
-			setWPMTitle(wordSpeed);
+	});
+	
+	$(window).on('mousewheel', function(e, delta){
+		if (delta > 0){
+			changeSpeed(wordSpeed - speedVariance);
+		}
+		else if (delta < 0){
+			changeSpeed(wordSpeed + speedVariance);
 		}
 	});
+	
+	function changeSpeed(speed){
+		stop();
+		
+		if (speed < speedVariance){
+			speed = speedVariance;
+		}
+		wordSpeed = speed;
+		setWPMTitle(speed);
+		
+		start();
+	}
 	
 	$('button.start').on('click', function(e){
 		start();
@@ -82,10 +96,9 @@ $(function(){
 			'format': 'json',
 			'action': 'query',
 			'titles': title,
-			'prop':   'revisions',
+			'prop':   ['revisions', 'extracts'],
 			'rvprop': 'content',
-			'rvparse':'',
-			'prop':  'extracts'
+			'rvparse':''
 		};
 		
 		$.getJSON(url, query, function(data){
