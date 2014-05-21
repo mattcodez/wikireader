@@ -55,4 +55,7 @@ $(function(){
 			setWPMTitle(wordSpeed);
 		}
 	});
+	
+	//$('button.start')
+	//$('button.stop')
 });
