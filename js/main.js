@@ -62,4 +62,31 @@ $(function(){
 	$('button.stop').on('click', function(e){
 		clearInterval(wordTick);
 	});
+	
+	$('button.url').on('click', function(e){
+		var title = $('input.url').val();
+		if (!title) return;
+		
+		var url = 'http://en.wikipedia.org/w/api.php?callback=?';
+		var query = {
+			'format': 'json',
+			'action': 'query',
+			'titles': title,
+			'prop':   'revisions',
+			'rvprop': 'content',
+			'rvparse':'',
+			'prop':  'extracts'
+		};
+		
+		$.getJSON(url, query, function(data){
+			var pages = 
+				data && data.query && data.query.pages;
+			var page = data.query.pages[Object.keys(data.query.pages)[0]]; //first page
+			if (page && page.extract){
+				var text = $('<div></div>').html(page.extract).text();
+				words = text.split(' ');
+				wordIndex = 0;
+			}			
+		});
+	});
 });
