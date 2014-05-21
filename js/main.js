@@ -56,6 +56,10 @@ $(function(){
 		}
 	});
 	
-	//$('button.start')
-	//$('button.stop')
+	$('button.start').on('click', function(e){
+		wordTick = setInterval(nextWord, wordSpeed);
+	});
+	$('button.stop').on('click', function(e){
+		clearInterval(wordTick);
+	});
 });
