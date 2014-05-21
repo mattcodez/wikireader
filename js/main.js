@@ -6,14 +6,21 @@ $(function(){
 	var wordIndex = 0;
 	function nextWord(){
 		if (wordIndex >= words.length){
-			clearInterval(wordTick);
+			stop();
 			return;
 		}
 		
 		setWord(words[wordIndex++]);
 	};
 	
-	var wordTick = setInterval(nextWord, wordSpeed);
+	var wordtick;
+	function start(){
+		wordTick = setInterval(nextWord, wordSpeed);
+	}
+	
+	function stop(){
+		clearInterval(wordTick);
+	}
 	
 	var wordDisplay = $('#wordDisplay');
 	var wordSections = wordDisplay.find('span');
@@ -28,9 +35,9 @@ $(function(){
 		wordSections.eq(2).text(end);
 	}
 	
-	var wpmHolder = $('h2 span');
+	var wpmHolder = $('h2.wpm span');
 	function setWPMTitle(wordSpeed){
-		wpmHolder.text((1000 / wordSpeed) * 60);
+		wpmHolder.text(Math.floor((1000 / wordSpeed) * 60));
 	}
 	
 	setWPMTitle(wordSpeed);
@@ -48,19 +55,19 @@ $(function(){
 		}
 		
 		if (mod){
-			clearInterval(wordTick);
+			stop();
 			wordSpeed += mod;
 			if (wordSpeed < mod) wordSpeed = mod;
-			wordTick = setInterval(nextWord, wordSpeed);
+			start();
 			setWPMTitle(wordSpeed);
 		}
 	});
 	
 	$('button.start').on('click', function(e){
-		wordTick = setInterval(nextWord, wordSpeed);
+		start();
 	});
 	$('button.stop').on('click', function(e){
-		clearInterval(wordTick);
+		stop();
 	});
 	
 	$('button.url').on('click', function(e){
@@ -79,6 +86,8 @@ $(function(){
 		};
 		
 		$.getJSON(url, query, function(data){
+			stop();
+			
 			var pages = 
 				data && data.query && data.query.pages;
 			var page = data.query.pages[Object.keys(data.query.pages)[0]]; //first page
@@ -86,7 +95,9 @@ $(function(){
 				var text = $('<div></div>').html(page.extract).text();
 				words = text.split(' ');
 				wordIndex = 0;
-			}			
+			}
+
+			start();
 		});
 	});
 });
