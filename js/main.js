@@ -19,6 +19,8 @@ $(function(){
 	var wordTick = null;
 	function start(){
 		wordTick = setInterval(nextWord, wordSpeed);
+		prevHolder.empty();
+		nextHolder.empty();
 	}
 	
 	function stop(){
@@ -36,6 +38,22 @@ $(function(){
 		wordSections.eq(0).text(first);
 		wordSections.eq(1).text(middle);
 		wordSections.eq(2).text(end);
+	}
+	
+	var prevHolder = $('.prev');
+	var nextHolder = $('.next');
+	function setContextWords(i){
+		//Prev list
+		prevHolder.empty();
+		for (var j = Math.max(i - 20, 0); j < (i - 1); j++){
+			prevHolder.append($('<span></span>').text(words[j]));
+		}
+		
+		//Next list
+		nextHolder.empty();
+		for (var j = i + 1; j < Math.min(i + 20, words.length); j++){
+			nextHolder.prepend($('<span></span>').text(words[j]));
+		}
 	}
 	
 	var wpmHolder = $('h2.wpm span');
@@ -84,6 +102,7 @@ $(function(){
 	});
 	$('button.stop').on('click', function(e){
 		stop();
+		setContextWords(wordIndex);
 	});
 	$('button.reset').on('click', function(e){
 		wordIndex = 0;
