@@ -4,7 +4,7 @@
 
 #main{
 	position: absolute;
-	width:50%;
+	/* width:50%; */
 	left:0;
 	right:0;
 	margin:auto;
@@ -12,5 +12,10 @@
 }
 
 .url{
-	width:50%;
+	width: 50%;
+}
+
+#allWords .prev span,
+#allWords .next span{
+	margin-right: 1em;
 }

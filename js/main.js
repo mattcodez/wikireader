@@ -42,16 +42,17 @@ $(function(){
 	
 	var prevHolder = $('.prev');
 	var nextHolder = $('.next');
+	var wordRange = 10;
 	function setContextWords(i){
 		//Prev list
 		prevHolder.empty();
-		for (var j = Math.max(i - 20, 0); j < (i - 1); j++){
+		for (var j = Math.max(i - wordRange, 0); j < (i - 1); j++){
 			prevHolder.append($('<span></span>').text(words[j]));
 		}
 		
 		//Next list
 		nextHolder.empty();
-		for (var j = i + 1; j < Math.min(i + 20, words.length); j++){
+		for (var j = i + 1; j < Math.min(i + wordRange, words.length); j++){
 			nextHolder.prepend($('<span></span>').text(words[j]));
 		}
 	}
