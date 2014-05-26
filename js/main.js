@@ -17,13 +17,16 @@ $(function(){
 	};
 	
 	var wordTick = null;
+	var isRunning = false;
 	function start(){
+		isRunning = true;
 		wordTick = setInterval(nextWord, wordSpeed);
 		prevHolder.empty();
 		nextHolder.empty();
 	}
 	
 	function stop(){
+		isRunning = false;
 		clearInterval(wordTick);
 	}
 	
@@ -87,7 +90,6 @@ $(function(){
 	});
 	
 	function changeSpeed(speed){
-		stop();
 		
 		if (speed < speedVariance){
 			speed = speedVariance;
@@ -95,7 +97,10 @@ $(function(){
 		wordSpeed = speed;
 		setWPMTitle(speed);
 		
-		start();
+		if (isRunning) {
+			stop();
+			start();
+		}
 	}
 	
 	$('button.start').on('click', function(e){
