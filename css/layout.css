@@ -18,13 +18,25 @@
 	justify-content: center;
 }
 
+#allWords .prev {
+	justify-content: flex-end;
+	/* flex-direction: row-reverse; */
+	display: flex;
+	flex-wrap: wrap-reverse;
+}
+
+#allWords .next {
+	justify-content: flex-start;
+}
+
 #allWords .prev span,
 #allWords .next span{
 	margin-right: 1em;
 }
 
 #wordDisplay{
-	flex-basis: 0.5;
+	flex-basis: 5em;
+	flex-grow: 2;
 }
 
 #wordDisplay span:nth-child(2){
