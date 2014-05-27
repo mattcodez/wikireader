@@ -23,10 +23,17 @@
 	/* flex-direction: row-reverse; */
 	display: flex;
 	flex-wrap: wrap-reverse;
+	flex-grow: 1;
+	flex-basis: 0;
 }
 
 #allWords .next {
 	justify-content: flex-start;
+	flex-grow: 1;
+	display: flex;
+	flex-wrap: wrap;
+	flex-shrink: 0.5;
+	flex-basis: 0;
 }
 
 #allWords .prev span,
@@ -35,8 +42,8 @@
 }
 
 #wordDisplay{
-	flex-basis: 5em;
-	flex-grow: 2;
+	/* flex-basis: 5em; */
+	flex-grow: 1;
 }
 
 #wordDisplay span:nth-child(2){
