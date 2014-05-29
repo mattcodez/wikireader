@@ -46,17 +46,17 @@ $(function(){
 	var prevHolder = $('.prev');
 	var nextHolder = $('.next');
 	var wordRange = 10;
-	function setContextWords(i){
+	function setContextWords(currentIndex){
 		//Prev list
 		prevHolder.empty();
-		for (var j = Math.max(i - wordRange, 0); j < (i - 1); j++){
+		for (var j = Math.max(currentIndex - wordRange, 0); j < currentIndex; j++){
 			prevHolder.append($('<span></span>').text(words[j]));
 		}
 		
 		//Next list
 		nextHolder.empty();
-		for (var j = i + 1; j < Math.min(i + wordRange, words.length); j++){
-			nextHolder.prepend($('<span></span>').text(words[j]));
+		for (var j = currentIndex + 1; j < Math.min(currentIndex + wordRange, words.length - 1); j++){
+			nextHolder.append($('<span></span>').text(words[j]));
 		}
 	}
 	
@@ -108,7 +108,7 @@ $(function(){
 	});
 	$('button.stop').on('click', function(e){
 		stop();
-		setContextWords(wordIndex);
+		setContextWords(wordIndex - 1); //Because increment ++ comes after setWord()
 	});
 	$('button.reset').on('click', function(e){
 		wordIndex = 0;

@@ -32,7 +32,7 @@
 	flex-grow: 1;
 	display: flex;
 	flex-wrap: wrap;
-	flex-shrink: 0.5;
+	/* flex-shrink: 0.5; */
 	flex-basis: 0;
 }
 
@@ -43,7 +43,9 @@
 
 #wordDisplay{
 	/* flex-basis: 5em; */
-	flex-grow: 1;
+	/* flex-grow: 1; */
+	/* flex-shrink: 1; */
+	margin-right: 1em;
 }
 
 #wordDisplay span:nth-child(2){
