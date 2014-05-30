@@ -52,21 +52,17 @@ $(function(){
 	
 		//Prev list
 		prevHolder.empty();
-		prevFill: for (var j = Math.max(currentIndex - wordRange, 0); j < currentIndex; j++){
+		//work backwards on word list
+		prevFill: for (var j = currentIndex - 1; j > Math.max(currentIndex - wordRange, 0); j--){
 			var word = words[j];
 			
 			//get total characters in line already
-			var spans = prevHolder.find('span');
-			var total = 0;
-			for (var k = 0; spans.length; k++){
-				var span = $(spans[k]);
-				total += span.text().length;
-				if ((prevHolder.total + word.length) > prevSize){
-					//no more!
-					break prevFill;
-				}
+			var chars = characterCount(prevHolder.find('span'));
+			if ((chars + word.length) > prevSize){
+				//no more!
+				break prevFill;
 			}
-			prevHolder.append($('<span></span>').text(word));
+			prevHolder.prepend($('<span></span>').text(word));
 		}
 		
 		//Next list
@@ -74,6 +70,16 @@ $(function(){
 		for (var j = currentIndex + 1; j < Math.min(currentIndex + wordRange, words.length - 1); j++){
 			nextHolder.append($('<span></span>').text(words[j]));
 		}
+	}
+	
+	function characterCount(set){
+		var total = 0;
+		for (var i = 0; i < set.length; i++){
+			var item = $(set[i]);
+			total += item.text().length + 1; //+1 for spaces, though technically should check margin
+		}
+		
+		return total;
 	}
 	
 	var wpmHolder = $('h2.wpm span');
