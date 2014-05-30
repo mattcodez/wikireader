@@ -47,10 +47,26 @@ $(function(){
 	var nextHolder = $('.next');
 	var wordRange = 10;
 	function setContextWords(currentIndex){
+		var prevSize = prevHolder.width() / parseFloat($("body").css("font-size"));
+		var nextSize = nextHolder.width() / parseFloat($("body").css("font-size"));
+	
 		//Prev list
 		prevHolder.empty();
-		for (var j = Math.max(currentIndex - wordRange, 0); j < currentIndex; j++){
-			prevHolder.append($('<span></span>').text(words[j]));
+		prevFill: for (var j = Math.max(currentIndex - wordRange, 0); j < currentIndex; j++){
+			var word = words[j];
+			
+			//get total characters in line already
+			var spans = prevHolder.find('span');
+			var total = 0;
+			for (var k = 0; spans.length; k++){
+				var span = $(spans[k]);
+				total += span.text().length;
+				if ((prevHolder.total + word.length) > prevSize){
+					//no more!
+					break prevFill;
+				}
+			}
+			prevHolder.append($('<span></span>').text(word));
 		}
 		
 		//Next list
