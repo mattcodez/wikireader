@@ -47,9 +47,6 @@ $(function(){
 	var nextHolder = $('.next');
 	var wordRange = 10;
 	function setContextWords(currentIndex){
-		var prevSize = prevHolder.width() / parseFloat($("body").css("font-size"));
-		var nextSize = nextHolder.width() / parseFloat($("body").css("font-size"));
-	
 		//Prev list
 		prevHolder.empty();
 		//work backwards on word list
@@ -57,16 +54,19 @@ $(function(){
 			var word = words[j];
 			
 			//get total characters in line already
-			var chars = characterCount(prevHolder.find('span'));
-			if ((chars + word.length) > prevSize){
+			var wordDOM = $('<span></span>').text(word);
+			prevHolder.prepend(wordDOM);
+			var childLength = lengthOfChildren(prevHolder);
+			
+			if (childLength > prevHolder.width()){
+				wordDOM.remove(); //children size exceed their container, get rid of last one
 				//no more!
 				break prevFill;
 			}
-			prevHolder.prepend($('<span></span>').text(word));
 		}
 		
 		//Next list
-		nextHolder.empty();
+		/*nextHolder.empty();
 		nextFill: for (var j = currentIndex + 1; j < Math.min(currentIndex + wordRange, words.length - 1); j++){
 			var word = words[j];
 			var chars = characterCount(nextHolder.find('span'));
@@ -75,15 +75,15 @@ $(function(){
 				break nextFill;
 			}
 			nextHolder.append($('<span></span>').text(word));
-		}
+		}*/
 	}
 	
-	function characterCount(set){
+	function lengthOfChildren(container){
+		var children = container.children();
 		var total = 0;
-		for (var i = 0; i < set.length; i++){
-			var item = $(set[i]);
-			total += item.text().length + 1; //+1 for spaces, though technically should check margin
-		}
+		children.each(
+			function(i, child){total += $(child).outerWidth(true);}
+		);
 		
 		return total;
 	}
