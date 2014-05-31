@@ -67,8 +67,14 @@ $(function(){
 		
 		//Next list
 		nextHolder.empty();
-		for (var j = currentIndex + 1; j < Math.min(currentIndex + wordRange, words.length - 1); j++){
-			nextHolder.append($('<span></span>').text(words[j]));
+		nextFill: for (var j = currentIndex + 1; j < Math.min(currentIndex + wordRange, words.length - 1); j++){
+			var word = words[j];
+			var chars = characterCount(nextHolder.find('span'));
+			if ((chars + word.length) > nextSize){
+				//no more!
+				break nextFill;
+			}
+			nextHolder.append($('<span></span>').text(word));
 		}
 	}
 	
