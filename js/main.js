@@ -45,23 +45,24 @@ $(function(){
 	
 	var prevHolder = $('.prev');
 	var nextHolder = $('.next');
+	var tempHolder = $('#temp');
 	var wordRange = 10;
 	function setContextWords(currentIndex){
 		//Prev list
 		prevHolder.empty();
+		tempHolder.empty();
 		//work backwards on word list
 		prevFill: for (var j = currentIndex - 1; j > Math.max(currentIndex - wordRange, 0); j--){
 			var word = words[j];
 			
-			//get total characters in line already
 			var wordDOM = $('<span></span>').text(word);
-			prevHolder.prepend(wordDOM);
-			var childLength = lengthOfChildren(prevHolder);
-			
-			if (childLength > prevHolder.width()){
-				wordDOM.remove(); //children size exceed their container, get rid of last one
+			tempHolder.append(wordDOM);
+			if (lengthOfChildren(tempHolder) > prevHolder.width()){		
 				//no more!
 				break prevFill;
+			}
+			else {
+				prevHolder.prepend(wordDOM.clone());
 			}
 		}
 		

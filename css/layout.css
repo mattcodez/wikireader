@@ -54,3 +54,18 @@
 #wordDisplay span:nth-child(2){
 	color: red;
 }
+
+#temp{
+	visibility:hidden;
+	bottom: 0;
+	
+	/*needs to be kept in sync with #allWords*/
+	font-size: 2em; 
+}
+
+#temp span{
+	/*Needs to be kept in sync with:
+	#allWords .prev span,
+	#allWords .next span*/
+	margin-right: 1em;
+}
