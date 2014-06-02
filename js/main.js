@@ -67,16 +67,21 @@ $(function(){
 		}
 		
 		//Next list
-		/*nextHolder.empty();
+		nextHolder.empty();
+		tempHolder.empty();
 		nextFill: for (var j = currentIndex + 1; j < Math.min(currentIndex + wordRange, words.length - 1); j++){
 			var word = words[j];
-			var chars = characterCount(nextHolder.find('span'));
-			if ((chars + word.length) > nextSize){
+			
+			var wordDOM = $('<span></span>').text(word);
+			tempHolder.append(wordDOM);
+			if (lengthOfChildren(tempHolder) > nextHolder.width()){		
 				//no more!
 				break nextFill;
 			}
-			nextHolder.append($('<span></span>').text(word));
-		}*/
+			else {
+				nextHolder.append(wordDOM.clone());
+			}
+		}
 	}
 	
 	function lengthOfChildren(container){
