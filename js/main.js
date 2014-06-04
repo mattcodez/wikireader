@@ -7,13 +7,24 @@ $(function(){
 	
 	var wordSpeed = 500;
 	var wordIndex = 0;
+	var wordDirection = 'forward';
 	function nextWord(){
-		if (wordIndex >= words.length){
-			stop();
-			return;
+		if (wordDirection == 'forward'){
+			if (wordIndex >= words.length){
+				stop();
+				return;
+			}
+			
+			setWord(words[wordIndex++]);
 		}
-		
-		setWord(words[wordIndex++]);
+		else if (wordDirection == 'reverse'){
+			if (wordIndex < 0){
+				stop();
+				return;
+			}
+			
+			setWord(words[wordIndex--]);
+		}
 	};
 	
 	var wordTick = null;
@@ -147,6 +158,20 @@ $(function(){
 	$('button.reset').on('click', function(e){
 		wordIndex = 0;
 	});
+	$('button.rewind').on('click', function(e){
+		var button = $(this);
+		
+		//Toggle word direction
+		if (wordDirection == 'forward'){
+			wordDirection = 'reverse';
+			button.text('Forward');
+		}
+		else{
+			wordDirection = 'forward';
+			button.text('Reverse');
+		}
+	});
+			
 	
 	$('button.url').on('click', function(e){
 		var title = $('input.url').val();
