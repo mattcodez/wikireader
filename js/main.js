@@ -153,12 +153,19 @@ $(function(){
 	});
 	$('button.stop').on('click', function(e){
 		stop();
-		setContextWords(wordIndex - 1); //Because increment ++ comes after setWord()
+		
+		//Because increment ++ and decrement -- comes after setWord()
+		if (wordDirection == 'forward'){
+			setContextWords(wordIndex - 1);
+		}
+		else if (wordDirection == 'reverse'){
+			setContextWords(wordIndex + 1);
+		}
 	});
 	$('button.reset').on('click', function(e){
 		wordIndex = 0;
 	});
-	$('button.rewind').on('click', function(e){
+	$('button.reverse').on('click', function(e){
 		var button = $(this);
 		
 		//Toggle word direction
